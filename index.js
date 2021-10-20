@@ -99,9 +99,18 @@ const handleRequest = async(request) => {
     let path = request.url.split('/move/')[1]?.split('?')[0]
     let player = parseInt(await GAMESTORE.get('player'));
     if(await registerMove(path, player)) {
-      return new Response('Play successfully registered', {
-        headers: { 'content-type': 'text/plain' },
-      })
+      if(gameWon) {
+        await GAMESTORE.put('gamestate', '[0,0,0,0,0,0,0,0,0]')
+        await GAMESTORE.put('player', '1')
+        gameWon = false;
+        return new Response('Player has won', {
+          headers: { 'content-type': 'text/plain' },
+        })
+      } else {
+        return new Response('Play successfully registered', {
+          headers: { 'content-type': 'text/plain' },
+        })
+      }
     } else {
       await GAMESTORE.put('gamestate', '[0,0,0,0,0,0,0,0,0]')
       await GAMESTORE.put('player', '1')
@@ -190,13 +199,4 @@ const handleRequest = async(request) => {
       headers: { 'content-type': 'text/plain' }
     })
   }
-
-  
-  // let lok = await GAMESTORE.get('gamestate')
-  // let lok = await GAMESTORE.list();
-  // lok = JSON.stringify(lok)
-
-  // return new Response(lok, {
-  //   headers: { 'content-type': 'text/plain' },
-  // })
 }

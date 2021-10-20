@@ -19,6 +19,17 @@ const printTable = () => {
   console.log(table[6], table[7], table[8])
 }
 
+const makeid = (length=64) => {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * 
+charactersLength));
+ }
+ return result;
+}
+
 let gameRunning = true;
 let gameWon = false;
 let gameState = ''
@@ -129,7 +140,11 @@ const handleRequest = async(request) => {
     }
 
     return new Response(blob, {
-      headers: { 'content-type': 'image/png' }
+      headers: { 
+        'content-type': 'image/png',
+        'Cache-Control': 'no-cache',
+        'ETag': makeid(64)
+      }
     })
   } else if(request.url.includes('debug')) {
     let v = await GAMESTORE.get('gamestate');
@@ -165,7 +180,11 @@ const handleRequest = async(request) => {
         break;
     }
     return new Response(blob, {
-      headers: { 'content-type': 'image/png' }
+      headers: { 
+        'content-type': 'image/png',
+        'Cache-Control': 'no-cache',
+        'ETag': makeid(64)
+      }
     })
   } else {
     return new Response('Something went wrong', {

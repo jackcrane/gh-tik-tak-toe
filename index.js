@@ -20,24 +20,21 @@ const printTable = () => {
 }
 
 const makeid = (length=64) => {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * 
-charactersLength));
- }
- return result;
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
 
-let gameRunning = true;
 let gameWon = false;
-let gameState = ''
 
 const registerMove = async (spot, position) => {
   let gs = await GAMESTORE.get('gamestate')
   table = await JSON.parse(gs)
-  if(table[spot] == 0 && gameRunning) {  
+  if(table[spot] == 0) {  
     table[spot] = position;
     for(let i = 0; i < winningConditions.length; i++) {
       if(
@@ -59,7 +56,6 @@ const registerMove = async (spot, position) => {
         )
       ) {
         gameWon = true;
-        gameState = `Won by ${table[winningConditions[i][0]]}`
       }
     }
     if(position === 1) {
@@ -69,16 +65,8 @@ const registerMove = async (spot, position) => {
     }
   }
 
-  if(gameRunning) {
-    await GAMESTORE.put('gamestate', JSON.stringify(table))
-    return true;
-  } else {
-    if(gameWon) {
-      await GAMESTORE.put('gamestate', '[0,0,0,0,0,0,0,0,0]')
-      await GAMESTORE.put('player', '1')
-      return false;
-    }
-  }
+  await GAMESTORE.put('gamestate', JSON.stringify(table))
+  return true;
 }
 
 addEventListener('fetch', event => {

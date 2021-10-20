@@ -93,7 +93,7 @@ const handleRequest = async(request) => {
   table = JSON.parse(await GAMESTORE.get('gamestate'))
 
   if(request.url.includes('/move/')) {
-    let path = request.url.split('/move/')[1]
+    let path = request.url.split('/move/')[1]?.split('?')[0]
     let player = parseInt(await GAMESTORE.get('player'));
     if(await registerMove(path, player)) {
       if(player === 1) {
@@ -120,7 +120,7 @@ const handleRequest = async(request) => {
     let blobError = await fetch('https://img.icons8.com/ios/50/000000/error--v1.png').then(r => r.blob());
     
 
-    let path = parseInt(request.url.split('/image/')[1]);
+    let path = parseInt(request.url.split('/image/')[1]?.split('?')[0]);
 
     console.log('pos', path, table[path])
 

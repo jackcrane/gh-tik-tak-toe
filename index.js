@@ -64,7 +64,7 @@ const registerMove = async (spot, position) => {
     }
     if(position === 1) {
       await GAMESTORE.put('player', '2');
-    } else if(player === 2) {
+    } else if(position === 2) {
       await GAMESTORE.put('player', '1');
     }
   }

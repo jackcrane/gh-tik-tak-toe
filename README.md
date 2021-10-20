@@ -10,6 +10,8 @@ Read the [blog post](https://blog.jackcrane.rocks/2021/10/19/gh-tik-tak-toe.html
 
 Check out the [source code](https://github.com/jackcrane/gh-tik-tak-toe)
 
+> Unfortunately this does not work on most mobile phones because of their aggressive cahcing policy. I cannot find any way to combat this, so for now, the only realy way to play this is on a computer. Sorry!
+
 Current player: 
 
 <img src="https://gh-tik-tak-toe.jackcrane.workers.dev/current-player?escape-cache">

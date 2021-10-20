@@ -62,6 +62,7 @@ const registerMove = async (spot, position) => {
         gameState = `Won by ${table[winningConditions[i][0]]}`
       }
     }
+    let player = await GAMESTORE.get('player');
     if(player === 1) {
       await GAMESTORE.put('player', '2');
     } else if(player === 2) {

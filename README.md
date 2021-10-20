@@ -68,4 +68,6 @@ Current player:
   </tr>
 </table>
 
+(You will need to reload the page after you make a move, otherwise new images will not be fetched)
+
 [Reset game](https://gh-tik-tak-toe.jackcrane.workers.dev/reset)

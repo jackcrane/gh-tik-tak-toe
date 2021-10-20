@@ -58,7 +58,6 @@ const registerMove = async (spot, position) => {
           table[winningConditions[i][2]] != 0
         )
       ) {
-        gameRunning = false;
         gameWon = true;
         gameState = `Won by ${table[winningConditions[i][0]]}`
       }
@@ -107,6 +106,7 @@ const handleRequest = async(request) => {
     } else {
       await GAMESTORE.put('gamestate', '[0,0,0,0,0,0,0,0,0]')
       await GAMESTORE.put('player', '1')
+      gameWon = false;
       return new Response('Player has won', {
         headers: { 'content-type': 'text/plain' },
       })

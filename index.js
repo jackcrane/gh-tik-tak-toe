@@ -76,7 +76,6 @@ const registerMove = async (spot, position) => {
     if(gameWon) {
       await GAMESTORE.put('gamestate', '[0,0,0,0,0,0,0,0,0]')
       await GAMESTORE.put('player', '1')
-      gameWon = false;
       return false;
     }
   }

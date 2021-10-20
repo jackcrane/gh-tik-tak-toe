@@ -62,6 +62,11 @@ const registerMove = async (spot, position) => {
         gameState = `Won by ${table[winningConditions[i][0]]}`
       }
     }
+    if(player === 1) {
+      await GAMESTORE.put('player', '2');
+    } else if(player === 2) {
+      await GAMESTORE.put('player', '1');
+    }
   }
 
   if(gameRunning) {
@@ -95,11 +100,6 @@ const handleRequest = async(request) => {
     let path = request.url.split('/move/')[1]?.split('?')[0]
     let player = parseInt(await GAMESTORE.get('player'));
     if(await registerMove(path, player)) {
-      if(player === 1) {
-        await GAMESTORE.put('player', '2');
-      } else if(player === 2) {
-        await GAMESTORE.put('player', '1');
-      }
       return new Response('Play successfully registered', {
         headers: { 'content-type': 'text/plain' },
       })
